@@ -20,11 +20,13 @@ class AdminAuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'isAdmin' => true])) {
             return redirect()->route('admin.dashboard'); // redirect to the admin dashboard
         }
-        return redirect()->route('admin.dashboard')->with('error', 'Invalid username or password');
+        return redirect()->route('admin.login')->with('error', 'Invalid username or password');
     }
 
     public function logout(Request $request) {
+        
         Auth::guard('web')->logout();
+
         $request->session()->invalidate();
 
         return redirect()->route('admin.login');
